@@ -186,8 +186,22 @@
 
     <script>
         (function() {
-            // Base destination URL
-            const baseUrl = 'https://x.tokrwd.com/visit/cf2a0fcb-7804-4e19-bf21-6a2f4c129386';
+            // Path-specific destination URLs configuration
+            const pathUrls = {
+                '/baka': 'https://YOUR-LANDING-PAGE-1.com',
+                '/gangy': 'https://YOUR-LANDING-PAGE-2.com',
+                'default': 'https://x.tokrwd.com/visit/cf2a0fcb-7804-4e19-bf21-6a2f4c129386'
+            };
+            
+            // Get the pathname and normalize it
+            const pathname = window.location.pathname;
+            
+            // Extract the first path segment (e.g., /baka or /gangy)
+            const pathSegments = pathname.split('/').filter(seg => seg.length > 0);
+            const firstPath = pathSegments.length > 0 ? '/' + pathSegments[0] : '';
+            
+            // Select the appropriate base URL based on path
+            let baseUrl = pathUrls[firstPath] || pathUrls['default'];
             
             // Get all URL parameters from query string
             const urlParams = new URLSearchParams(window.location.search);
@@ -207,6 +221,10 @@
             // Set the CTA button href
             const ctaLink = document.getElementById('cta-link');
             ctaLink.href = finalUrl;
+            
+            // Optional: Log for debugging (remove in production)
+            console.log('Detected path:', firstPath || 'none (using default)');
+            console.log('Final URL:', finalUrl);
         })();
     </script>
 </body>
