@@ -1,231 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Continue</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Get Paid to Scroll TikTok</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: #000000;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            overflow-x: hidden;
-        }
+  :root {
+    --bg: hsl(120 20% 4%);
+    --fg: hsl(0 0% 95%);
+    --card: hsl(120 11% 9%);
+    --border: hsl(120 11% 12%);
+    --primary: hsl(150 100% 50%);
+    --primary-fg: hsl(150 10% 5%);
+    --muted: hsl(120 11% 18%);
+    --muted-fg: hsl(150 5% 55%);
+    --secondary: hsl(120 11% 9%);
+    --star: hsl(45 100% 55%);
+  }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-            animation: fadeIn 0.8s ease-out;
-        }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
 
-        h1 {
-            font-size: clamp(32px, 8vw, 56px);
-            font-weight: 800;
-            margin-bottom: 30px;
-            letter-spacing: -0.5px;
-            line-height: 1.2;
-            text-align: center;
-            animation: slideUp 0.6s ease-out 0.2s both;
-        }
+  .container { max-width: 28rem; margin: 0 auto; }
 
-        h1 .gradient-text {
-            background: linear-gradient(135deg, #fe2c55 0%, #00f2ea 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+  /* Header */
+  .header { display: flex; align-items: center; justify-content: space-between; padding: 1rem; }
+  .verified-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: hsla(150,100%,50%,0.1); border: 1px solid hsla(150,100%,50%,0.2);
+    border-radius: 9999px; padding: 0.375rem 0.75rem; font-size: 0.75rem; font-weight: 500; color: var(--primary);
+  }
+  .pulse-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: var(--primary); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{ opacity:1 } 50%{ opacity:0.4 } }
 
-        .arrows {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 25px;
-            animation: bounce 2s infinite;
-        }
+  /* Logo bar */
+  .logo-bar { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1rem; }
+  .logo-bar img { width: 2rem; height: 2rem; border-radius: 0.5rem; object-fit: cover; }
+  .logo-pair { display: flex; align-items: center; gap: 0.5rem; }
+  .logo-pair span { color: var(--muted-fg); font-size: 1.125rem; }
+  .crossover { color: var(--primary); font-size: 0.875rem; font-weight: 600; }
+  .users { display: flex; align-items: center; gap: 0.375rem; }
+  .users .dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: var(--primary); }
+  .users span:last-child { font-size: 0.875rem; color: var(--muted-fg); }
 
-        .arrow {
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 25px solid #fe2c55;
-            margin-bottom: -10px;
-            opacity: 0.8;
-            filter: drop-shadow(0 0 8px rgba(254, 44, 85, 0.5));
-        }
+  /* Hero */
+  .hero { text-align: center; padding: 2rem 1rem; }
+  .hero h1 { font-size: 2.25rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; }
+  .hero h1 .green { color: var(--primary); }
+  .hero p { color: var(--muted-fg); font-size: 1.125rem; margin-bottom: 1.5rem; }
+  .earnings-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 9999px; padding: 0.75rem 1.25rem; font-size: 0.875rem; color: var(--muted-fg);
+  }
+  .earnings-pill .amount { color: var(--primary); font-weight: 700; }
+  .info-icon {
+    width: 1.25rem; height: 1.25rem; border-radius: 9999px; background: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-icon svg { width: 0.75rem; height: 0.75rem; }
 
-        .arrow:nth-child(2) {
-            opacity: 0.5;
-            border-top-color: #ff5577;
-            filter: drop-shadow(0 0 6px rgba(255, 85, 119, 0.4));
-        }
+  /* Age Selection */
+  .section { padding: 1.5rem 1rem; }
+  .section h2 { font-size: 1.25rem; font-weight: 700; text-align: center; margin-bottom: 1rem; }
+  .age-options { display: flex; flex-direction: column; gap: 0.75rem; }
+  .card-option {
+    background: var(--card); border: 1px solid var(--border); border-radius: 1rem;
+    padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; transition: border-color 0.2s; text-align: left; width: 100%;
+    font: inherit; color: inherit;
+  }
+  .card-option:hover { border-color: hsla(150,100%,50%,0.5); }
+  .card-option p { margin: 0; }
+  .card-option .title { font-weight: 600; font-size: 1.125rem; }
+  .card-option .desc { font-size: 0.875rem; color: var(--muted-fg); }
+  .card-option .desc .green { color: var(--primary); font-weight: 600; }
+  .radio-circle { width: 1.25rem; height: 1.25rem; border-radius: 9999px; border: 2px solid hsla(150,5%,55%,0.3); flex-shrink: 0; }
 
-        .arrow:nth-child(3) {
-            opacity: 0.3;
-            border-top-color: #00f2ea;
-            filter: drop-shadow(0 0 6px rgba(0, 242, 234, 0.4));
-        }
+  /* Calculator */
+  .calc-card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; }
+  .calc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .calc-label { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
+  .calc-hours .num { color: var(--primary); font-weight: 600; }
+  .calc-hours span:last-child { color: var(--muted-fg); }
+  .calc-hours { font-size: 0.875rem; }
+  input[type="range"] {
+    width: 100%; height: 0.25rem; border-radius: 9999px; appearance: none; cursor: pointer;
+    background: linear-gradient(to right, hsl(150 100% 50%) 0%, hsl(150 100% 50%) 0%, hsl(150 8% 15%) 0%, hsl(150 8% 15%) 100%);
+    margin-bottom: 1.5rem;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none; width: 1.25rem; height: 1.25rem; border-radius: 9999px;
+    background: var(--primary); cursor: pointer; border: 2px solid var(--primary-fg);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  }
+  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .calc-cell { text-align: center; }
+  .calc-cell.highlight { background: var(--secondary); border-radius: 0.75rem; padding: 0.75rem; }
+  .calc-cell .label { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; margin-bottom: 0.25rem; }
+  .calc-cell .value { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+  .calc-note { font-size: 0.75rem; color: var(--muted-fg); text-align: center; margin-top: 1rem; }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0);
-            }
-            40% {
-                transform: translateY(-10px);
-            }
-            60% {
-                transform: translateY(-5px);
-            }
-        }
+  /* TikTok tip */
+  .tip-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 1rem;
+    padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    color: var(--primary); font-weight: 500; font-size: 0.875rem;
+  }
+  .tip-card svg { width: 1rem; height: 1rem; }
+  .tip-card .arrow { color: var(--fg); }
+  .tip-card .browser { color: var(--fg); font-weight: 500; }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
+  /* Rating */
+  .rating { display: flex; align-items: center; justify-content: center; gap: 0.25rem; padding: 1rem; }
+  .star { width: 1.25rem; height: 1.25rem; fill: var(--star); color: var(--star); }
+  .rating .score { font-weight: 700; margin-left: 0.5rem; }
+  .rating .sep { color: var(--muted-fg); margin: 0 0.25rem; }
+  .rating .count { color: var(--muted-fg); font-size: 0.875rem; }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+  /* Steps */
+  .steps-title { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; text-align: center; margin-bottom: 1.5rem; }
+  .steps { display: flex; flex-direction: column; gap: 1rem; }
+  .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; }
+  .step-inner { display: flex; align-items: flex-start; gap: 1rem; }
+  .step-num {
+    flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 9999px;
+    background: var(--primary); color: var(--primary-fg); display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.875rem;
+  }
+  .step-card h3 { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.25rem; }
+  .step-card p { font-size: 0.875rem; color: var(--muted-fg); margin-bottom: 0.75rem; }
+  .step-card p .green { color: var(--primary); font-weight: 600; }
+  .step-badge {
+    display: inline-block; background: hsla(150,100%,50%,0.15); border: 1px solid hsla(150,100%,50%,0.3);
+    color: var(--primary); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.5rem 1rem; border-radius: 0.5rem;
+  }
 
-        .cta-button {
-            background: linear-gradient(135deg, #fe2c55 0%, #00f2ea 100%);
-            color: #000;
-            font-size: clamp(16px, 4vw, 20px);
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            padding: 18px 60px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 4px 20px rgba(254, 44, 85, 0.3);
-            transition: all 0.3s ease;
-            min-width: 250px;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            text-decoration: none;
-            display: inline-block;
-        }
+  /* Footer */
+  .footer { text-align: center; padding: 1rem; }
+  .footer p { font-size: 0.875rem; color: var(--muted-fg); margin-bottom: 0.75rem; }
+  .footer .payout-methods { font-size: 0.875rem; color: var(--muted-fg); }
+  .footer-legal { display: flex; align-items: center; justify-content: center; gap: 1rem; font-size: 0.75rem; color: var(--muted-fg); padding-top: 1rem; }
+  .footer-legal svg { width: 0.75rem; height: 0.75rem; }
+  .lock-item { display: flex; align-items: center; gap: 0.25rem; }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 30px rgba(254, 44, 85, 0.5);
-        }
+  /* Sticky CTA */
+  .sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem; max-width: 28rem; margin: 0 auto; }
+  .cta-btn {
+    width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    background: var(--primary); color: var(--primary-fg); font-weight: 700; font-size: 1.125rem;
+    padding: 1rem; border-radius: 1rem; border: none; cursor: pointer; text-decoration: none;
+    box-shadow: 0 10px 25px -5px hsla(150,100%,50%,0.3);
+  }
+  .cta-btn svg { width: 1.25rem; height: 1.25rem; }
 
-        .cta-button:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 15px rgba(254, 44, 85, 0.3);
-        }
+  .page2 { padding-bottom: 6rem; }
 
-        @media (max-width: 480px) {
-            .cta-button {
-                font-size: 16px;
-                padding: 16px 50px;
-                min-width: 220px;
-            }
-
-            h1 {
-                margin-bottom: 25px;
-            }
-
-            .arrows {
-                margin-bottom: 20px;
-            }
-        }
-
-        @media (max-width: 360px) {
-            .cta-button {
-                padding: 15px 40px;
-                min-width: 200px;
-            }
-        }
-    </style>
+  #page1, #page2 { display: none; }
+  #page1.active, #page2.active { display: block; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>Click Here To <span class="gradient-text">Sign Up</span></h1>
-        
-        <div class="arrows">
-            <div class="arrow"></div>
-            <div class="arrow"></div>
-            <div class="arrow"></div>
-        </div>
 
-        <a id="cta-link" class="cta-button" href="#">CONTINUE</a>
+<!-- PAGE 1: Age Selection -->
+<div id="page1" class="active">
+<div class="container">
+  <header class="header">
+    <div class="verified-badge"><span class="pulse-dot"></span><span>Verified Partnership</span></div>
+  </header>
+
+  <div class="logo-bar">
+    <div class="logo-pair">
+      <img src="https://screen-to-splurge.lovable.app/assets/tiktok-logo-BVMy8VTh.png" alt="TikTok">
+      <span>×</span>
+      <img src="https://screen-to-splurge.lovable.app/assets/freecash-logo-D-W3GSXO.png" alt="FreeCash">
     </div>
+    <span class="crossover">#1 CROSSOVER</span>
+    <div class="users"><span class="dot"></span><span>1.4m+ users</span></div>
+  </div>
 
-    <script>
-        (function() {
-            // Path-specific destination URLs configuration
-            const pathUrls = {
-                '/baka': 'https://worldrwd.com/',
-                '/gangy': 'https://YOUR-LANDING-PAGE-2.com',
-                'default': 'https://tkscroll.com/'
-            };
-            
-            // Get the pathname and normalize it
-            const pathname = window.location.pathname;
-            
-            // Extract the first path segment (e.g., /baka or /gangy)
-            const pathSegments = pathname.split('/').filter(seg => seg.length > 0);
-            const firstPath = pathSegments.length > 0 ? '/' + pathSegments[0] : '';
-            
-            // Select the appropriate base URL based on path
-            let baseUrl = pathUrls[firstPath] || pathUrls['default'];
-            
-            // Get all URL parameters from query string
-            const urlParams = new URLSearchParams(window.location.search);
-            
-            // Extract linkid from the URL path if not in query string
-            // Path format: /p/bz/abc123 or /p/bz/abc123?other=params
-            const pathMatch = window.location.pathname.match(/^\/p\/bz\/(.+)$/);
-            if (pathMatch && !urlParams.has('linkid')) {
-                const linkidFromPath = pathMatch[1];
-                urlParams.set('linkid', linkidFromPath);
-            }
-            
-            // Build the final URL with all parameters
-            const queryString = urlParams.toString() ? '?' + urlParams.toString() : '';
-            const finalUrl = baseUrl + queryString;
-            
-            // Set the CTA button href
-            const ctaLink = document.getElementById('cta-link');
-            ctaLink.href = finalUrl;
-            
-            // Optional: Log for debugging (remove in production)
-            console.log('Detected path:', firstPath || 'none (using default)');
-            console.log('Final URL:', finalUrl);
-        })();
-    </script>
+  <div class="hero">
+    <h1>Get paid to<br><span class="green">scroll TikTok</span></h1>
+    <p>Turn your screen time into cash.</p>
+    <div class="earnings-pill">
+      <span>Earn up to</span>
+      <span class="amount">$1,500/week</span>
+      <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>How old are you?</h2>
+    <div class="age-options">
+      <button class="card-option" onclick="selectAge('21+')">
+        <div>
+          <p class="title">I'm 21 or older</p>
+          <p class="desc"><span class="green">Instant payouts:</span> PayPal, Crypto, Bank Transfer & more.</p>
+        </div>
+        <div class="radio-circle"></div>
+      </button>
+      <button class="card-option" onclick="selectAge('under21')">
+        <div>
+          <p class="title">I'm under 21</p>
+          <p class="desc">Limited & lower payouts.</p>
+        </div>
+        <div class="radio-circle"></div>
+      </button>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="calc-card">
+      <div class="calc-header">
+        <span class="calc-label">Earnings Calculator</span>
+        <span class="calc-hours"><span class="num" id="hoursDisplay">1</span><span> hrs/day</span></span>
+      </div>
+      <input type="range" min="1" max="8" value="1" id="hoursSlider" oninput="updateCalc()">
+      <div class="calc-grid">
+        <div class="calc-cell"><p class="label">Weekly</p><p class="value" id="weekly">$188</p></div>
+        <div class="calc-cell highlight"><p class="label">Monthly</p><p class="value" id="monthly">$808</p></div>
+      </div>
+      <p class="calc-note">*Estimate based on avg. user earnings</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="tip-card">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      <span>On TikTok? Tap :</span>
+      <span class="arrow">→</span>
+      <span class="browser">Open in browser</span>
+    </div>
+  </div>
+
+  <div class="rating">
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <span class="score">4.8</span><span class="sep">·</span><span class="count">251k reviews</span>
+  </div>
+</div>
+</div>
+
+<!-- PAGE 2: How to Start -->
+<div id="page2">
+<div class="container page2">
+  <header class="header">
+    <div class="verified-badge"><span class="pulse-dot"></span><span>Verified Partnership</span></div>
+  </header>
+
+  <div class="logo-bar">
+    <div class="logo-pair">
+      <img src="https://screen-to-splurge.lovable.app/assets/tiktok-logo-BVMy8VTh.png" alt="TikTok">
+      <span>×</span>
+      <img src="https://screen-to-splurge.lovable.app/assets/freecash-logo-D-W3GSXO.png" alt="FreeCash">
+    </div>
+    <span class="crossover">#1 CROSSOVER</span>
+    <div class="users"><span class="dot"></span><span>1.4m+ users</span></div>
+  </div>
+
+  <div class="hero">
+    <h1>Get paid to<br><span class="green">scroll TikTok</span></h1>
+    <p>Turn your screen time into cash.</p>
+    <div class="earnings-pill">
+      <span>Earn up to</span>
+      <span class="amount">$1,500/week</span>
+      <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="steps-title">How to Start</p>
+    <div class="steps">
+      <div class="step-card"><div class="step-inner">
+        <span class="step-num">1</span>
+        <div>
+          <h3>Download the app</h3>
+          <p>Install FreeCash & get <span class="green">$5 instantly</span>.</p>
+          <span class="step-badge">Free Download</span>
+        </div>
+      </div></div>
+      <div class="step-card"><div class="step-inner">
+        <span class="step-num">2</span>
+        <div>
+          <h3>Sign up & unlock offers</h3>
+          <p>Create your free account & complete <span class="green">1 offer</span> to unlock TikTok "scroll & earn" feature.</p>
+          <span class="step-badge">Important</span>
+        </div>
+      </div></div>
+      <div class="step-card"><div class="step-inner">
+        <span class="step-num">3</span>
+        <div>
+          <h3>Get paid</h3>
+          <p><span class="green">Instant Payouts:</span> PayPal, Crypto, Bank, Venmo, or Gift Cards.</p>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>iOS & Android · No credit card required</p>
+    <div class="rating">
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="score">4.8</span><span class="sep">·</span><span class="count">251k reviews</span>
+    </div>
+    <p class="payout-methods">PayPal · Crypto · Bank · Venmo · Gift Cards</p>
+    <div class="footer-legal">
+      <span>© All Rights Reserved</span>
+      <span class="lock-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> SSL Encrypted</span>
+      <span>© Terms and Policies</span>
+    </div>
+  </div>
+
+  <div class="sticky-cta">
+    <a id="ctaLink" href="https://www.phef6trk.com/R7TPLH/2N4885R/" target="_blank" rel="noopener noreferrer" class="cta-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      DOWNLOAD FREE APP
+    </a>
+  </div>
+</div>
+</div>
+
+<script>
+  var selectedAge = null;
+
+  function selectAge(age) {
+    selectedAge = age;
+    document.getElementById('page1').classList.remove('active');
+    document.getElementById('page2').classList.add('active');
+    var link = age === '21+' 
+      ? 'https://www.phef6trk.com/R7TPLH/2TG7MMC/' 
+      : 'https://www.phef6trk.com/R7TPLH/2N4885R/';
+    document.getElementById('ctaLink').href = link;
+  }
+
+  function updateCalc() {
+    var slider = document.getElementById('hoursSlider');
+    var hours = Number(slider.value);
+    var pct = ((hours - 1) / 7) * 100;
+    slider.style.background = 'linear-gradient(to right, hsl(150 100% 50%) 0%, hsl(150 100% 50%) ' + pct + '%, hsl(150 8% 15%) ' + pct + '%, hsl(150 8% 15%) 100%)';
+    document.getElementById('hoursDisplay').textContent = hours;
+    var weekly = Math.round(188 * hours);
+    var monthly = Math.round(weekly * 4.3);
+    document.getElementById('weekly').textContent = '$' + weekly;
+    document.getElementById('monthly').textContent = '$' + monthly;
+  }
+</script>
 </body>
 </html>
