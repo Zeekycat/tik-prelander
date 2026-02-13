@@ -337,6 +337,15 @@
 
 <script>
   var selectedAge = null;
+  var urlParams = new URLSearchParams(window.location.search);
+
+  function buildURL(baseURL) {
+    var buttonUrlObj = new URL(baseURL);
+    urlParams.forEach(function(value, key) {
+      buttonUrlObj.searchParams.set(key, value);
+    });
+    return buttonUrlObj.toString();
+  }
 
   function selectAge(age) {
     selectedAge = age;
@@ -345,7 +354,7 @@
     var link = age === '21+' 
       ? 'https://www.phef6trk.com/R7TPLH/2TG7MMC/' 
       : 'https://www.phef6trk.com/R7TPLH/2N4885R/';
-    document.getElementById('ctaLink').href = link;
+    document.getElementById('ctaLink').href = buildURL(link);
   }
 
   function updateCalc() {
