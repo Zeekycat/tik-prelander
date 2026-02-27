@@ -1,342 +1,881 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Get Paid to Scroll</title>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <!-- Updated logo/favicon for Freecash -->
+    <link rel="icon" type="image/x-icon" href="/img/fc_logo.png">
+    <link rel="apple-touch-icon" href="/img/fc_logo.png">
+    <title>Freecash - Download App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <style>
+      /* ==================================== */
+      /* ===== COLORS & VARIABLES (FREECASH: DEEP BLACK/NEON GREEN) ===== */
+      /* ==================================== */
+      :root {
+        /* Cores Freecash */
+        --bg: #05050a; /* Background Deep Black */
+        --text: #f0f6ff; /* High contrast text (White) */
+        --muted: #9aa0ae; /* Muted text */
+        --brand: #00ff88; /* Primary Brand Color (Neon Green) */
+        --brand2: #00d175; /* Secondary Brand Color (Darker Green) */
+        --accent-red: #ff4757; /* Warning/Highlight */
+        /* Elementos */
+        --bg-card: #0e0e14; /* Card background */
+        --border: #1a1a27; /* Subtle borders */
+        --brand-glow: rgba(0, 255, 136, 0.25); /* Glow effect */
+      }
 
-  :root {
-    --bg: hsl(120 20% 4%);
-    --fg: hsl(0 0% 95%);
-    --card: hsl(120 11% 9%);
-    --border: hsl(120 11% 12%);
-    --primary: hsl(150 100% 50%);
-    --primary-fg: hsl(150 10% 5%);
-    --muted: hsl(120 11% 18%);
-    --muted-fg: hsl(150 5% 55%);
-    --secondary: hsl(120 11% 9%);
-    --star: hsl(45 100% 55%);
-  }
+      /* Reset and Base Styling */
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      body {
+        color: var(--text);
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Helvetica,
+          Arial,
+          sans-serif;
+        overflow-x: hidden;
+        min-height: 100vh;
+        line-height: 1.47059;
+        font-weight: 400;
+        letter-spacing: -0.022em;
+        /* Background Freecash */
+        background-color: var(--bg);
+        background-image:
+          radial-gradient(
+            circle at 10% 80%,
+            rgba(0, 255, 136, 0.08) 0%,
+            transparent 45%
+          ),
+          radial-gradient(
+            circle at 90% 20%,
+            rgba(0, 255, 136, 0.05) 0%,
+            transparent 45%
+          ),
+          linear-gradient(to top, rgba(0, 0, 0, 0.1), transparent);
+        position: relative;
+      }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--fg);
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-  }
+      /* Animated background elements */
+      .bg-orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.3;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .orb1 {
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 255, 136, 0.4),
+          transparent
+        );
+        top: -100px;
+        left: -100px;
+        animation: float1 20s ease-in-out infinite;
+      }
+      .orb2 {
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 213, 117, 0.3),
+          transparent
+        );
+        bottom: -50px;
+        right: -50px;
+        animation: float2 15s ease-in-out infinite;
+      }
 
-  .container { max-width: 28rem; margin: 0 auto; }
+      @keyframes float1 {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(50px, 50px) scale(1.1);
+        }
+      }
+      @keyframes float2 {
+        0%,
+        100% {
+          transform: translate(0, 0) scale(1);
+        }
+        50% {
+          transform: translate(-30px, -40px) scale(1.15);
+        }
+      }
 
-  /* Header */
-  .header { display: flex; align-items: center; justify-content: space-between; padding: 1rem; }
-  .verified-badge {
-    display: flex; align-items: center; gap: 0.5rem;
-    background: hsla(150,100%,50%,0.1); border: 1px solid hsla(150,100%,50%,0.2);
-    border-radius: 9999px; padding: 0.375rem 0.75rem; font-size: 0.75rem; font-weight: 500; color: var(--primary);
-  }
-  .pulse-dot { width: 0.5rem; height: 0.5rem; border-radius: 9999px; background: var(--primary); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{ opacity:1 } 50%{ opacity:0.4 } }
+      /* Layout Container */
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 60px 20px 40px;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+      }
 
-  /* Hero */
-  .hero { text-align: center; padding: 2rem 1rem; }
-  .hero h1 { font-size: 2.25rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.5rem; }
-  .hero h1 .green { color: var(--primary); }
-  .hero p { color: var(--muted-fg); font-size: 1.125rem; margin-bottom: 1.5rem; }
-  .earnings-pill {
-    display: inline-flex; align-items: center; gap: 0.5rem;
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 9999px; padding: 0.75rem 1.25rem; font-size: 0.875rem; color: var(--muted-fg);
-  }
-  .earnings-pill .amount { color: var(--primary); font-weight: 700; }
-  .info-icon {
-    width: 1.25rem; height: 1.25rem; border-radius: 9999px; background: var(--muted);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .info-icon svg { width: 0.75rem; height: 0.75rem; }
+      /* Section Transition Styles */
+      .section {
+        opacity: 1;
+        transition:
+          opacity 0.4s ease-out,
+          transform 0.4s ease-out;
+      }
 
-  /* Age Selection */
-  .section { padding: 1.5rem 1rem; }
-  .section h2 { font-size: 1.25rem; font-weight: 700; text-align: center; margin-bottom: 1rem; }
-  .age-options { display: flex; flex-direction: column; gap: 0.75rem; }
-  .card-option {
-    background: var(--card); border: 1px solid var(--border); border-radius: 1rem;
-    padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;
-    cursor: pointer; transition: border-color 0.2s; text-align: left; width: 100%;
-    font: inherit; color: inherit;
-  }
-  .card-option:hover { border-color: hsla(150,100%,50%,0.5); }
-  .card-option p { margin: 0; }
-  .card-option .title { font-weight: 600; font-size: 1.125rem; }
-  .card-option .desc { font-size: 0.875rem; color: var(--muted-fg); }
-  .card-option .desc .green { color: var(--primary); font-weight: 600; }
-  .radio-circle { width: 1.25rem; height: 1.25rem; border-radius: 9999px; border: 2px solid hsla(150,5%,55%,0.3); flex-shrink: 0; }
+      .section.fade-out {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
 
-  /* Calculator */
-  .calc-card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; }
-  .calc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-  .calc-label { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; }
-  .calc-hours .num { color: var(--primary); font-weight: 600; }
-  .calc-hours span:last-child { color: var(--muted-fg); }
-  .calc-hours { font-size: 0.875rem; }
-  input[type="range"] {
-    width: 100%; height: 0.25rem; border-radius: 9999px; appearance: none; cursor: pointer;
-    background: linear-gradient(to right, hsl(150 100% 50%) 0%, hsl(150 100% 50%) 0%, hsl(150 8% 15%) 0%, hsl(150 8% 15%) 100%);
-    margin-bottom: 1.5rem;
-  }
-  input[type="range"]::-webkit-slider-thumb {
-    appearance: none; width: 1.25rem; height: 1.25rem; border-radius: 9999px;
-    background: var(--primary); cursor: pointer; border: 2px solid var(--primary-fg);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-  }
-  .calc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .calc-cell { text-align: center; }
-  .calc-cell.highlight { background: var(--secondary); border-radius: 0.75rem; padding: 0.75rem; }
-  .calc-cell .label { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; margin-bottom: 0.25rem; }
-  .calc-cell .value { font-size: 1.5rem; font-weight: 700; color: var(--primary); }
-  .calc-note { font-size: 0.75rem; color: var(--muted-fg); text-align: center; margin-top: 1rem; }
+      .section.hidden {
+        display: none;
+      }
 
-  /* TikTok tip */
-  .tip-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 1rem;
-    padding: 0.75rem 1rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-    color: var(--primary); font-weight: 500; font-size: 0.875rem;
-  }
-  .tip-card svg { width: 1rem; height: 1rem; }
-  .tip-card .arrow { color: var(--fg); }
-  .tip-card .browser { color: var(--fg); font-weight: 500; }
+      .section.fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
 
-  /* Rating */
-  .rating { display: flex; align-items: center; justify-content: center; gap: 0.25rem; padding: 1rem; }
-  .star { width: 1.25rem; height: 1.25rem; fill: var(--star); color: var(--star); }
-  .rating .score { font-weight: 700; margin-left: 0.5rem; }
-  .rating .sep { color: var(--muted-fg); margin: 0 0.25rem; }
-  .rating .count { color: var(--muted-fg); font-size: 0.875rem; }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
 
-  /* Steps */
-  .steps-title { font-size: 0.75rem; color: var(--muted-fg); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 500; text-align: center; margin-bottom: 1.5rem; }
-  .steps { display: flex; flex-direction: column; gap: 1rem; }
-  .step-card { background: var(--card); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; }
-  .step-inner { display: flex; align-items: flex-start; gap: 1rem; }
-  .step-num {
-    flex-shrink: 0; width: 2rem; height: 2rem; border-radius: 9999px;
-    background: var(--primary); color: var(--primary-fg); display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 0.875rem;
-  }
-  .step-card h3 { font-weight: 700; font-size: 1.125rem; margin-bottom: 0.25rem; }
-  .step-card p { font-size: 0.875rem; color: var(--muted-fg); margin-bottom: 0.75rem; }
-  .step-card p .green { color: var(--primary); font-weight: 600; }
-  .step-badge {
-    display: inline-block; background: hsla(150,100%,50%,0.15); border: 1px solid hsla(150,100%,50%,0.3);
-    color: var(--primary); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
-    padding: 0.5rem 1rem; border-radius: 0.5rem;
-  }
+      /* Logo Styling */
+      .logo-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin: 0 auto 20px;
+      }
 
-  /* Footer */
-  .footer { text-align: center; padding: 1rem; }
-  .footer p { font-size: 0.875rem; color: var(--muted-fg); margin-bottom: 0.75rem; }
-  .footer .payout-methods { font-size: 0.875rem; color: var(--muted-fg); }
-  .footer-legal { display: flex; align-items: center; justify-content: center; gap: 1rem; font-size: 0.75rem; color: var(--muted-fg); padding-top: 1rem; }
-  .footer-legal svg { width: 0.75rem; height: 0.75rem; }
-  .lock-item { display: flex; align-items: center; gap: 0.25rem; }
+      .logo-container {
+        width: 70px;
+        height: 70px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 255, 136, 0.1);
+        border: 1px solid rgba(0, 255, 136, 0.3);
+        box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4);
+      }
 
-  /* Sticky CTA */
-  .sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; padding: 1rem; max-width: 28rem; margin: 0 auto; }
-  .cta-btn {
-    width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-    background: var(--primary); color: var(--primary-fg); font-weight: 700; font-size: 1.125rem;
-    padding: 1rem; border-radius: 1rem; border: none; cursor: pointer; text-decoration: none;
-    box-shadow: 0 10px 25px -5px hsla(150,100%,50%,0.3);
-  }
-  .cta-btn svg { width: 1.25rem; height: 1.25rem; }
+      .logo {
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 20px;
+      }
 
-  .page2 { padding-bottom: 6rem; }
+      /* First Step Styles */
+      .main-title {
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1.1;
+        margin: 30px 0 20px;
+        background: linear-gradient(90deg, var(--text), var(--brand));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
 
-  #page1, #page2 { display: none; }
-  #page1.active, #page2.active { display: block; }
-</style>
-</head>
-<body>
+      .question-subtitle {
+        font-size: 15px;
+        color: var(--muted);
+        margin-bottom: 40px;
+        line-height: 1.5;
+      }
 
-<!-- PAGE 1: Age Selection -->
-<div id="page1" class="active">
-<div class="container">
-  <header class="header">
-    <div class="verified-badge"><span class="pulse-dot"></span><span>Verified Partnership</span></div>
-  </header>
+      /* Payout Badge */
+      .payout-badge {
+        background: linear-gradient(135deg, #0a1a0f 0%, #0f1419 100%);
+        border: 1px solid var(--brand);
+        border-radius: 12px;
+        padding: 12px 16px;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(0, 255, 136, 0.15);
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--muted);
+        line-height: 1.4;
+      }
+      .payout-badge .highlight-green {
+        color: var(--brand);
+        font-weight: 700;
+      }
 
-  <div class="hero">
-    <h1>Get paid to<br><span class="green">scroll & earn</span></h1>
-    <p>Turn your screen time into cash.</p>
-    <div class="earnings-pill">
-      <span>Earn up to</span>
-      <span class="amount">$1,500/week</span>
-      <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
-    </div>
-  </div>
+      /* Trustpilot Badge */
+      .trustpilot-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin: 0 auto 8px;
+        pointer-events: none;
+        user-select: none;
+      }
+      .tp-logo {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        letter-spacing: 0.3px;
+      }
+      .tp-stars {
+        display: flex;
+        gap: 2px;
+      }
+      .tp-star {
+        width: 18px;
+        height: 18px;
+        background: #00b67a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .tp-star svg {
+        width: 12px;
+        height: 12px;
+        fill: #fff;
+      }
+      .tp-info {
+        font-size: 11px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .tp-score {
+        font-weight: 700;
+        color: var(--text);
+      }
 
-  <div class="section">
-    <h2>How old are you?</h2>
-    <div class="age-options">
-      <button class="card-option" onclick="selectAge('21+')">
-        <div>
-          <p class="title">I'm 21 or older</p>
-          <p class="desc"><span class="green">Instant payouts:</span> PayPal, Crypto, Bank Transfer & more.</p>
+      /* Age Selection Buttons */
+      .age-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .age-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 24px;
+        background: #1a1d29;
+        border: 2px solid #2a2d39;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+
+      .age-btn-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        color: var(--text);
+      }
+
+      .age-btn-subtitle {
+        font-size: 12px;
+        color: #787c89;
+        font-weight: 500;
+        line-height: 1.4;
+        opacity: 0.8;
+      }
+
+      .age-btn.primary {
+        background: var(--brand);
+        border-color: var(--brand);
+        box-shadow: 0 8px 30px rgba(0, 255, 136, 0.4);
+      }
+
+      .age-btn.primary .age-btn-title {
+        color: #000;
+      }
+
+      .age-btn.primary .age-btn-subtitle {
+        color: #004d2e;
+        opacity: 0.7;
+      }
+
+      .age-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(0, 255, 136, 0.2);
+      }
+
+      .age-btn.primary:hover {
+        background: #00ff88;
+        box-shadow: 0 12px 40px rgba(0, 255, 136, 0.5);
+      }
+
+      .age-btn:active {
+        transform: translateY(-1px);
+      }
+
+      /* Second Step Styles */
+      .youre-in-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        margin: 30px 0 20px;
+      }
+      .check-circle {
+        width: 60px;
+        height: 60px;
+        background: var(--brand);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        box-shadow: 0 0 20px var(--brand-glow);
+      }
+      .check-circle svg {
+        width: 32px;
+        height: 32px;
+        color: var(--bg);
+      }
+      .youre-in-text {
+        font-size: 52px;
+        font-weight: 900;
+        line-height: 1;
+        background: linear-gradient(90deg, var(--text), var(--brand));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+      .text-neon {
+        color: var(--brand);
+      }
+
+      .subtitle {
+        font-size: 15px;
+        color: var(--muted);
+        line-height: 1.5;
+        margin-bottom: 30px;
+        padding: 0 10px;
+      }
+
+      /* Card (Earning Journey Steps) */
+      .card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        text-align: left;
+        backdrop-filter: blur(20px);
+        box-shadow:
+          0 12px 40px rgba(0, 0, 0, 0.8),
+          0 0 30px var(--brand-glow);
+        position: relative;
+        padding: 0;
+        margin-top: 40px;
+      }
+
+      .section-title {
+        font-size: 14px;
+        font-weight: 700;
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding: 24px 0;
+        color: var(--muted);
+        text-shadow: none;
+        font-family: "Inter", sans-serif;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .li {
+        display: flex;
+        gap: 16px;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        align-items: flex-start;
+        text-align: left;
+        background: transparent;
+      }
+      .li:first-of-type {
+        border-top: 1px solid var(--border);
+      }
+      .li:last-child {
+        border-bottom: 0;
+      }
+
+      .check {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--brand);
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--bg);
+        flex-shrink: 0;
+        box-shadow: 0 0 10px var(--brand-glow);
+      }
+      .li b {
+        display: block;
+        color: var(--text);
+        font-size: 16px;
+        margin-bottom: 4px;
+        font-weight: 700;
+      }
+      .muted-text {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      /* Main CTA Button */
+      .cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        background: linear-gradient(135deg, var(--brand), var(--brand2));
+        color: var(--bg) !important;
+        font-weight: 800;
+        font-size: 17px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: 0;
+        border-radius: 16px;
+        padding: 20px;
+        margin-top: 30px;
+        margin-bottom: 40px;
+        text-decoration: none;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 10px 30px var(--brand-glow);
+        transition: all 0.3s ease;
+        animation: pulse 3s ease-in-out infinite;
+      }
+      .cta-icon {
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+      .cta::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+      .cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 40px rgba(0, 255, 136, 0.5);
+      }
+      .cta:hover::before {
+        left: 100%;
+      }
+
+      /* Footer styling */
+      .foot {
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+        margin-top: 16px;
+        opacity: 0.7;
+      }
+
+      /* Activation Required Notice */
+      .activation-notice {
+        background: linear-gradient(135deg, #1a0f0a 0%, #0f1419 100%);
+        border: 2px solid var(--accent-red);
+        border-radius: 16px;
+        padding: 20px;
+        margin-top: 24px;
+        text-align: left;
+        box-shadow: 0 0 30px rgba(255, 71, 87, 0.3);
+        animation: glow-border 2s ease-in-out infinite;
+        position: relative;
+      }
+
+      .activation-notice::before {
+        content: "⚠️ IMPORTANT";
+        position: absolute;
+        top: -1px;
+        right: 20px;
+        background: var(--accent-red);
+        color: #fff;
+        font-size: 10px;
+        font-weight: 800;
+        padding: 4px 12px;
+        border-radius: 0 0 8px 8px;
+        letter-spacing: 0.5px;
+      }
+
+      @keyframes glow-border {
+        0%,
+        100% {
+          box-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+          border-color: var(--accent-red);
+        }
+        50% {
+          box-shadow: 0 0 35px rgba(255, 71, 87, 0.5);
+          border-color: #ff6b7a;
+        }
+      }
+
+      .activation-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+      }
+
+      .lock-icon {
+        font-size: 20px;
+        line-height: 1;
+        flex-shrink: 0;
+      }
+
+      .activation-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--text);
+        flex: 1;
+      }
+
+      .activation-text {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .highlight-green {
+        color: var(--brand);
+        font-weight: 700;
+      }
+
+      /* Animation for Main CTA Button */
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 10px 30px var(--brand-glow);
+        }
+        50% {
+          box-shadow: 0 15px 40px rgba(0, 255, 136, 0.6);
+        }
+      }
+
+      /* Responsiveness */
+      @media (max-width: 600px) {
+        .container {
+          padding: 60px 16px 32px;
+        }
+        /* First step - keep it spacious */
+        .main-title {
+          font-size: 46px;
+        }
+        .trustpilot-badge {
+          flex-wrap: wrap;
+          gap: 6px;
+        }
+        /* Second step */
+        .youre-in-text {
+          font-size: 38px;
+        }
+        .check-circle {
+          width: 48px;
+          height: 48px;
+        }
+        .check-circle svg {
+          width: 26px;
+          height: 26px;
+        }
+        /* Shared */
+        .li {
+          padding: 16px;
+        }
+        .li b {
+          font-size: 15px;
+        }
+        .cta {
+          font-size: 16px;
+          padding: 18px;
+          margin-top: 24px;
+          margin-bottom: 32px;
+        }
+        .card {
+          border-radius: 18px;
+          margin-top: 28px;
+        }
+        .activation-notice {
+          padding: 16px;
+          border-radius: 12px;
+        }
+        .subtitle {
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .main-title {
+          font-size: 38px;
+        }
+        .youre-in-text {
+          font-size: 32px;
+        }
+        .youre-in-section {
+          gap: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Animated background orbs -->
+    <div class="bg-orb orb1"></div>
+    <div class="bg-orb orb2"></div>
+
+    <!-- Container -->
+    <div class="container">
+      <!-- FIRST STEP: Age Selection -->
+      <section class="section" id="firstStep">
+        <!-- Logo -->
+        <div class="logo-wrapper">
+          <div class="logo-container">
+            <img class="logo" src="/img/fc_logo.png" alt="Freecash Logo">
+          </div>
         </div>
-        <div class="radio-circle"></div>
-      </button>
-      <button class="card-option" onclick="selectAge('under21')">
-        <div>
-          <p class="title">I'm under 21</p>
+
+        <!-- Trustpilot Badge -->
+        <div class="trustpilot-badge">
+          <span class="tp-logo">Trustpilot</span>
+          <div class="tp-stars">
+            <span class="tp-star"><svg viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></span>
+            <span class="tp-star"><svg viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></span>
+            <span class="tp-star"><svg viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></span>
+            <span class="tp-star"><svg viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></span>
+            <span class="tp-star"><svg viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg></span>
+          </div>
+          <span class="tp-info"><span class="tp-score">4.8</span> · 263K+ reviews</span>
         </div>
-        <div class="radio-circle"></div>
-      </button>
-    </div>
-  </div>
 
-  <div class="section">
-    <div class="calc-card">
-      <div class="calc-header">
-        <span class="calc-label">Earnings Calculator</span>
-        <span class="calc-hours"><span class="num" id="hoursDisplay">1</span><span> hrs/day</span></span>
-      </div>
-      <input type="range" min="1" max="8" value="1" id="hoursSlider" oninput="updateCalc()">
-      <div class="calc-grid">
-        <div class="calc-cell"><p class="label">Weekly</p><p class="value" id="weekly">$188</p></div>
-        <div class="calc-cell highlight"><p class="label">Monthly</p><p class="value" id="monthly">$808</p></div>
-      </div>
-      <p class="calc-note">*Estimate based on avg. user earnings</p>
-    </div>
-  </div>
+        <!-- Main Title -->
+        <h1 class="main-title">Get Paid Now</h1>
 
-  <div class="section">
-    <div class="tip-card">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      <span>On social media? Tap :</span>
-      <span class="arrow">→</span>
-      <span class="browser">Open in browser</span>
-    </div>
-  </div>
+        <!-- Subtitle -->
+        <p class="question-subtitle">
+          Join thousands earning daily for playing games, testing apps<br>while
+          scrolling and cashing out instantly.
+        </p>
 
-  <div class="rating">
-    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    <span class="score">4.8</span><span class="sep">·</span><span class="count">251k reviews</span>
-  </div>
-</div>
-</div>
-
-<!-- PAGE 2: How to Start -->
-<div id="page2">
-<div class="container page2">
-  <header class="header">
-    <div class="verified-badge"><span class="pulse-dot"></span><span>Verified Partnership</span></div>
-  </header>
-
-  <div class="hero">
-    <h1>Get paid to<br><span class="green">scroll & earn</span></h1>
-    <p>Turn your screen time into cash.</p>
-    <div class="earnings-pill">
-      <span>Earn up to</span>
-      <span class="amount">$1,500/week</span>
-      <span class="info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
-    </div>
-  </div>
-
-  <div class="section">
-    <p class="steps-title">How to Start</p>
-    <div class="steps">
-      <div class="step-card"><div class="step-inner">
-        <span class="step-num">1</span>
-        <div>
-          <h3>Download the app</h3>
-          <p>Install FreeCash & get <span class="green">$5 instantly</span>.</p>
-          <span class="step-badge">Free Download</span>
+        <!-- Age Selection Buttons -->
+        <div class="age-buttons">
+          <div class="payout-badge">
+            💸 <span class="highlight-green">Instant Payouts:</span> PayPal,
+            CashApp, Venmo, Crypto &amp; Wire
+          </div>
+          <button class="age-btn primary" onclick="selectAge('over21')">
+            <div class="age-btn-title">I'm over 21</div>
+          </button>
+          <button class="age-btn" onclick="selectAge('under21')">
+            <div class="age-btn-title">I'm under 21</div>
+          </button>
         </div>
-      </div></div>
-      <div class="step-card"><div class="step-inner">
-        <span class="step-num">2</span>
-        <div>
-          <h3>Sign up & unlock offers</h3>
-          <p>Create your free account & complete <span class="green">1 offer</span> to unlock the "scroll & earn" feature.</p>
-          <span class="step-badge">Important</span>
+      </section>
+
+      <!-- SECOND STEP: You're In! -->
+      <section class="section hidden" id="secondStep">
+        <!-- Logo -->
+        <div class="logo-wrapper">
+          <div class="logo-container">
+            <img class="logo" src="/img/fc_logo.png" alt="Freecash Logo">
+          </div>
         </div>
-      </div></div>
-      <div class="step-card"><div class="step-inner">
-        <span class="step-num">3</span>
-        <div>
-          <h3>Get paid</h3>
-          <p><span class="green">Instant Payouts:</span> PayPal, Crypto, Bank, Venmo, or Gift Cards.</p>
+
+        <!-- You're In! Section -->
+        <div class="youre-in-section">
+          <div class="check-circle">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="youre-in-text">
+            You're <span class="text-neon">In!</span>
+          </div>
         </div>
-      </div></div>
+
+        <!-- Subtitle -->
+        <p class="subtitle" style="margin-bottom: 32px; padding: 0">
+          Your account is pre-qualified for higher payouts. Download the app to
+          activate full access.
+        </p>
+
+        <!-- CTA (Botão principal) -->
+        <a id="cta" class="cta" href="https://www.ch6rrl8trk.com/262DXM/5NWWWN/">
+          <svg class="cta-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"></path>
+          </svg>
+          Download Now
+        </a>
+
+        <!-- Card: Earning Journey Steps -->
+        <div class="card">
+          <!-- Title -->
+          <div class="section-title">YOUR EARNING JOURNEY</div>
+
+          <!-- Lista de Passos -->
+          <div class="li">
+            <span class="check">1</span>
+            <div>
+              <b>Download the Freecash App</b>
+              <div class="muted-text">
+                Available on iOS &amp; Android - Takes less than 30 seconds
+              </div>
+            </div>
+          </div>
+          <div class="li">
+            <span class="check">2</span>
+            <div>
+              <b>Complete Daily Offers</b>
+              <div class="muted-text">
+                Watch Netflix, scroll TikTok while you test apps &amp; games, or
+                take surveys!
+              </div>
+            </div>
+          </div>
+          <div class="li" style="border-bottom: none">
+            <span class="check">3</span>
+            <div>
+              <b>Cash Out Your Earnings</b>
+              <div class="muted-text">
+                Instant Payouts: PayPal, CashApp, Venmo, Crypto &amp; Wire
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Fim do Card -->
+
+        <!-- Activation Required Notice -->
+        <div class="activation-notice">
+          <div class="activation-header">
+            <span class="lock-icon">🔓</span>
+            <span class="activation-title">Activation Required</span>
+          </div>
+          <p class="activation-text">
+            New users: Complete
+            <span class="highlight-green">2 quick offers</span> to unlock full
+            access and start earning in minutes.
+          </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="foot">
+          Trusted by over 500,000 users earning money daily
+        </div>
+      </section>
     </div>
-  </div>
 
-  <div class="footer">
-    <p>iOS & Android · No credit card required</p>
-    <div class="rating">
-      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <svg class="star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <span class="score">4.8</span><span class="sep">·</span><span class="count">251k reviews</span>
-    </div>
-    <p class="payout-methods">PayPal · Crypto · Bank · Venmo · Gift Cards</p>
-    <div class="footer-legal">
-      <span>© All Rights Reserved</span>
-      <span class="lock-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> SSL Encrypted</span>
-      <span>© Terms and Policies</span>
-    </div>
-  </div>
+    <script>
+      // ========================================
+      // FREECASH - SCRIPTS FROM FIRST LANDER
+      // (buildURL, selectAge w/ tracking, updateCalc)
+      // ========================================
 
-  <div class="sticky-cta">
-    <a id="ctaLink" href="https://www.ch6rrl8trk.com/262DXM/5NWWWN/" target="_blank" rel="noopener noreferrer" class="cta-btn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      DOWNLOAD FREE APP
-    </a>
-  </div>
-</div>
-</div>
+      var selectedAge = null;
+      var urlParams = new URLSearchParams(window.location.search);
 
-<script>
-  var selectedAge = null;
-  var urlParams = new URLSearchParams(window.location.search);
+      function buildURL(baseURL) {
+        var buttonUrlObj = new URL(baseURL);
+        var isAfftrackr = baseURL.indexOf('afftrackr.com') !== -1;
 
-  function buildURL(baseURL) {
-    var buttonUrlObj = new URL(baseURL);
-    urlParams.forEach(function(value, key) {
-      buttonUrlObj.searchParams.set(key, value);
-    });
-    return buttonUrlObj.toString();
-  }
+        urlParams.forEach(function(value, key) {
+          if (key === 'sub1' && isAfftrackr) {
+            buttonUrlObj.searchParams.set('s1', value);
+          } else {
+            buttonUrlObj.searchParams.set(key, value);
+          }
+        });
+        return buttonUrlObj.toString();
+      }
 
-  function selectAge(age) {
-    selectedAge = age;
-    document.getElementById('page1').classList.remove('active');
-    document.getElementById('page2').classList.add('active');
-    var link = age === '21+' 
-      ? 'https://www.ch6rrl8trk.com/262DXM/5NWWWN/' 
-      : 'https://www.ch6rrl8trk.com/262DXM/5NWWWN/';
-    document.getElementById('ctaLink').href = buildURL(link);
-  }
+      function selectAge(age) {
+        selectedAge = age;
 
-  function updateCalc() {
-    var slider = document.getElementById('hoursSlider');
-    var hours = Number(slider.value);
-    var pct = ((hours - 1) / 7) * 100;
-    slider.style.background = 'linear-gradient(to right, hsl(150 100% 50%) 0%, hsl(150 100% 50%) ' + pct + '%, hsl(150 8% 15%) ' + pct + '%, hsl(150 8% 15%) 100%)';
-    document.getElementById('hoursDisplay').textContent = hours;
-    var weekly = Math.round(188 * hours);
-    var monthly = Math.round(weekly * 4.3);
-    document.getElementById('weekly').textContent = '$' + weekly;
-    document.getElementById('monthly').textContent = '$' + monthly;
-  }
-</script>
-</body>
-</html>
+        // Build the affiliate link with URL params
+        var link = age === 'over21'
+          ? 'https://www.ch6rrl8trk.com/262DXM/5NWWWN/'
+          : 'https://www.ch6rrl8trk.com/262DXM/5NWWWN/';
+        document.getElementById('cta').href = buildURL(link);
+
+        // Fade transition (preserve second lander UI behavior)
+        var firstStep = document.getElementById('firstStep');
+        var secondStep = document.getElementById('secondStep');
+
+        firstStep.classList.add('fade-out');
+
+        setTimeout(function() {
+          firstStep.classList.add('hidden');
+          secondStep.classList.remove('hidden');
+          void secondStep.offsetWidth;
+          secondStep.classList.add('fade-in');
+        }, 400);
+      }
+
+      function updateCalc() {
+        var slider = document.getElementById('hoursSlider');
+        var hours = Number(slider.value);
+        var pct = ((hours - 1) / 7) * 100;
+        slider.style.background = 'linear-gradient(to right, hsl(150 100% 50%) 0%, hsl(150 100% 50%) ' + pct + '%, hsl(150 8% 15%) ' + pct + '%, hsl(150 8% 15%) 100%)';
+        document.getElementById('hoursDisplay').textContent = hours;
+        var weekly = Math.round(188 * hours);
+        var monthly = Math.round(weekly * 4.3);
+        document.getElementById('weekly').textContent = '$' + weekly;
+        document.getElementById('monthly').textContent = '$' + monthly;
+      }
+    </script>
+
+</body></html>
