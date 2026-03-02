@@ -4,12 +4,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <!--Optional, send client hints to get accurate device data-->
-    <meta http-equiv="delegate-ch" content="sec-ch-ua https://48no3d.mcgo2.com; sec-ch-ua-mobile https://48no3d.mcgo2.com; sec-ch-ua-arch https://48no3d.mcgo2.com; sec-ch-ua-model https://48no3d.mcgo2.com; sec-ch-ua-platform https://48no3d.mcgo2.com; sec-ch-ua-platform-version https://48no3d.mcgo2.com; sec-ch-ua-bitness https://48no3d.mcgo2.com; sec-ch-ua-full-version-list https://48no3d.mcgo2.com; sec-ch-ua-full-version https://48no3d.mcgo2.com" />
-    <!-- MaxConv Tracking Script Base Code-->
-    <script>!function(w,d,o,n,c){w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};var s=d.createElement(n),t=d.getElementsByTagName(n)[0];s.async=!0;s.defer=!0;s.src="https://48no3d.mcgo2.com/t/t.js";t.parentNode.insertBefore(s,t);}(window,document,"maxconv","script");</script>
-    <noscript><link rel="stylesheet" href="https://48no3d.mcgo2.com/t/t.css?mc_ns=1" /></noscript>
-    <!-- End MaxConv Tracking Script Base Code-->
     <link rel="icon" type="image/x-icon" href="fc_logo.png">
     <link rel="apple-touch-icon" href="fc_logo.png">
     <title>Freecash - Download App</title>
@@ -212,7 +206,7 @@
           activate full access.
         </p>
 
-        <a id="cta" class="cta" href="https://www.ch6rrl8trk.com/262DXM/5MJ263/">
+        <a id="cta" class="cta" href="https://my.ghoultokyo.com/click">
           <svg class="cta-icon" viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"></path>
           </svg>
@@ -277,9 +271,7 @@
       function selectAge(age) {
         selectedAge = age;
 
-        var link = age === 'over21'
-          ? 'https://www.ch6rrl8trk.com/262DXM/5MJ263/'
-          : 'https://www.ch6rrl8trk.com/262DXM/5MJ263/';
+        var link = 'https://my.ghoultokyo.com/click';
         document.getElementById('cta').href = buildURL(link);
 
         var firstStep = document.getElementById('firstStep');
@@ -293,18 +285,6 @@
           void secondStep.offsetWidth;
           secondStep.classList.add('fade-in');
         }, 400);
-      }
-
-      function updateCalc() {
-        var slider = document.getElementById('hoursSlider');
-        var hours = Number(slider.value);
-        var pct = ((hours - 1) / 7) * 100;
-        slider.style.background = 'linear-gradient(to right, hsl(150 100% 50%) 0%, hsl(150 100% 50%) ' + pct + '%, hsl(150 8% 15%) ' + pct + '%, hsl(150 8% 15%) 100%)';
-        document.getElementById('hoursDisplay').textContent = hours;
-        var weekly = Math.round(188 * hours);
-        var monthly = Math.round(weekly * 4.3);
-        document.getElementById('weekly').textContent = '$' + weekly;
-        document.getElementById('monthly').textContent = '$' + monthly;
       }
     </script>
 
